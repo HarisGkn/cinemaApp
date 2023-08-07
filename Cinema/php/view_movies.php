@@ -1,19 +1,27 @@
 <?php
 session_start();
+require_once "config.php";
+
+
+// Fetch movies from the Java service endpoint
+$endpointUrl = "http://localhost:8080/CinemaService/products"; // Adjust the URL accordingly
+$response = file_get_contents($endpointUrl);
+$movies = json_decode($response, true);
+
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CinemaApp</title>
+    <title>Manage Movies</title>
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <!-- Include the header -->
     <header>
         <h1>CinemaApp</h1>
         <nav>
-            <a href="index.php">Home</a>
-            <a href="view_movies.php">list Movies</a>
+        <a href="index.php">Home</a>
+        <a href="view_movies.php">list Movies</a>
             <?php
                 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                     if (isset($_SESSION['role']) && $_SESSION['role'] === 'user') {
@@ -35,22 +43,24 @@ session_start();
         </nav>
     </header>
     <div class="container">
-        <?php
-            if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-                if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
-                    echo '<h2>Welcome, Admin!</h2>';
-                    echo '<h2>From here you have access to modify movies and change the status of reservations</h2>';
-                } else {
-                    echo '<h2>Welcome, User!</h2>';
-                    echo '<p>Enjoy using CinemaApp to make movie reservations.</p>';
-                }
-            } else {
-                echo '<h2>Welcome to CinemaApp</h2>';
-                echo '<h2>Your ultimate movie reservation platform.</h2>';
-            }
-        ?>
+        <h1>Manage Movies</h1>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Type</th>
+            </tr>
+            <?php foreach ($movies as $movie) { ?>
+                <tr>
+                    <td><?php echo $movie['name']; ?></td>
+                    <td><?php echo $movie['description']; ?></td>
+                    <td><?php echo $movie['price']; ?></td>
+                    <td><?php echo $movie['type']; ?></td>
+                </tr>
+            <?php } ?>
+        </table>
     </div>
-    <!-- Include the footer -->
     <footer>
         <p>&copy; CinemaApp 2023. All rights reserved.</p>
     </footer>
