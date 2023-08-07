@@ -1,0 +1,175 @@
+/* Reset some default browser styles */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #D8D9DA; /* Light Gray */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    background-color: #272829; /* Dark Gray */
+    color: #fff;
+    text-align: left; /* Align title to the left */
+    padding: 10px;
+}
+
+header h1 {
+    margin: 0;
+    color: #FFF6E0; /* Light Yellow */
+}
+
+nav {
+    background-color: #61677A; /* Blue Gray */
+    color: #fff;
+    text-align: right; /* Align navigation to the right */
+    padding: 10px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+h1, h2 {
+    margin-bottom: 10px;
+    color: #272829; /* Dark Gray */
+}
+
+.container h2 {
+    text-align: center; /* Center the welcome text */
+}
+
+.form-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form select,
+form button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form button {
+    background-color: #61677A; /* Blue Gray */
+    color: #fff;
+    cursor: pointer;
+}
+
+.error {
+    color: red;
+    margin-top: 5px;
+}
+
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.product-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    background-color: #FFF6E0; /* Light Yellow */
+}
+
+.product-card h3 {
+    margin-bottom: 5px;
+    color: #272829; /* Dark Gray */
+}
+
+.product-card p {
+    margin-bottom: 10px;
+}
+
+.reservation-list {
+    margin-top: 20px;
+}
+
+.reservation-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+
+footer {
+    background-color: #61677A; /* Blue Gray */
+    color: #fff;
+    text-align: center;
+    padding: 20px; /* Increased padding */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Style for action buttons */
+.action-form {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.action-form button {
+    padding: 5px 10px;
+    background-color: #61677A;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: inline-block; /* Add this line */
+}
+
+.action-form button:hover {
+    background-color: #61677A;
+}
+
+table td {
+    padding: 8px;
+}
+
+/* Add border to table and cells */
+table {
+    background-color: #ccc; /* Light Gray */
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+
+table th, table td {
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+/* body {
+    background-image: url('../images/cinemaAppMainPic.jpg'); 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+} */
