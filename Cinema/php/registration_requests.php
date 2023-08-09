@@ -11,35 +11,44 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || $_SESSION
 $approval_message = '';
 $error_message = '';
 
+// Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Handle approval of registration request
     if (isset($_POST['approve']) && isset($_POST['request_id'])) {
         $request_id = $_POST['request_id'];
 
+        // Query to retrieve the selected registration request
         $selectQuery = "SELECT * FROM registration_requests WHERE requestid = ?";
         $stmtSelectRequest = mysqli_prepare($link, $selectQuery);
 
         if ($stmtSelectRequest) {
+            // Execute the select query
             mysqli_stmt_bind_param($stmtSelectRequest, "i", $request_id);
             mysqli_stmt_execute($stmtSelectRequest);
             
+            // Get the request details from the result
             $result = mysqli_stmt_get_result($stmtSelectRequest);
             $request = mysqli_fetch_assoc($result);
             
             if ($request) {
+                // Insert the user into the 'users' table
                 $insertQuery = "INSERT INTO users (firstname, lastname, country, city, address, email, username, password, role)
                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'user')";
 
                 $stmtInsertUser = mysqli_prepare($link, $insertQuery);
 
                 if ($stmtInsertUser) {
+                    // Bind parameters and execute the insert query
                     mysqli_stmt_bind_param($stmtInsertUser, "ssssssss", $request['firstname'], $request['lastname'], $request['country'],
                         $request['city'], $request['address'], $request['email'], $request['username'], $request['password']);
                     
                     if (mysqli_stmt_execute($stmtInsertUser)) {
+                        // Update the request status to 'accepted'
                         $updateQuery = "UPDATE registration_requests SET status = 'accepted' WHERE requestid = ?";
                         $stmtUpdateRequest = mysqli_prepare($link, $updateQuery);
                         
                         if ($stmtUpdateRequest) {
+                            // Bind parameter and execute the update query
                             mysqli_stmt_bind_param($stmtUpdateRequest, "i", $request_id);
                             if (mysqli_stmt_execute($stmtUpdateRequest)) {
                                 $approval_message = 'Request approved and user added successfully.';
@@ -56,10 +65,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             
             mysqli_stmt_close($stmtSelectRequest);
-        }
+        } // Handle rejection of registration request
     } elseif (isset($_POST['reject']) && isset($_POST['request_id'])) {
         $request_id = $_POST['request_id'];
-
+        // Update the request status to 'rejected'
         $updateQuery = "UPDATE registration_requests SET status = 'rejected' WHERE requestid = ?";
         $stmtUpdateRequest = mysqli_prepare($link, $updateQuery);
 
@@ -83,6 +92,7 @@ $selectQuery = "SELECT * FROM registration_requests WHERE status = 'pending'";
 $result = mysqli_query($link, $selectQuery);
 
 if ($result) {
+    // Fetch and store requests in the 'requests' array
     while ($row = mysqli_fetch_assoc($result)) {
         $requests[] = $row;
     }
@@ -97,13 +107,18 @@ if ($result) {
 </head>
 <body>
     <header>
-        <h1>CinemaApp</h1>
+        <h1>
+            <a name="logo" href="index.php">CinemaApp</a>
+        </h1>
+        <!-- Navigation links based on user role and login status -->
         <nav>
             <a href="index.php">Home</a>
+            <a href="view_movies.php">list Movies</a>
             <?php
                 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                     if (isset($_SESSION['role']) && $_SESSION['role'] === 'user') {
-                        echo '<a href="my_info.php">My Info</a>';
+                        echo '<a href="create_reservation.php">Create Reservation</a>';
+                        echo '<a href="user_view_reservations.php">My Reservations</a>';
                     } elseif (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
                         echo '<a href="view_reservations.php">View Reservations</a>';
                         echo '<a href="create_product.php">Add Movies</a>';
@@ -122,13 +137,16 @@ if ($result) {
     </header>
     <div class="container">
         <h1>Admin Approval</h1>
+        <!-- Success message -->
         <?php if (!empty($approval_message)) { ?>
             <p class="success"><?php echo $approval_message; ?></p>
         <?php } ?>
+        <!-- Error message -->
         <?php if (!empty($error_message)) { ?>
             <p class="error"><?php echo $error_message; ?></p>
         <?php } ?>
         <?php if (!empty($requests)) { ?>
+            <!-- Display the pending registration requests in a table -->
             <table>
                 <thead>
                     <tr>

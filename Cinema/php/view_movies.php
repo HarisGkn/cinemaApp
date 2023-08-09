@@ -18,14 +18,18 @@ $movies = json_decode($response, true);
 </head>
 <body>
     <header>
-        <h1>CinemaApp</h1>
+        <h1>
+            <a name="logo" href="index.php">CinemaApp</a>
+        </h1>
+        <!-- Navigation links based on user role and login status -->
         <nav>
-        <a href="index.php">Home</a>
-        <a href="view_movies.php">list Movies</a>
+            <a href="index.php">Home</a>
+            <a href="view_movies.php">list Movies</a>
             <?php
                 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                     if (isset($_SESSION['role']) && $_SESSION['role'] === 'user') {
-                        echo '<a href="my_info.php">My Info</a>';
+                        echo '<a href="create_reservation.php">Create Reservation</a>';
+                        echo '<a href="user_view_reservations.php">My Reservations</a>';
                     } elseif (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
                         echo '<a href="view_reservations.php">View Reservations</a>';
                         echo '<a href="create_product.php">Add Movies</a>';

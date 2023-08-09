@@ -1,10 +1,31 @@
 <?php
 session_start();
+require_once "config.php";
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: login.php');
+    exit();
+}
+
+$userid = $_SESSION['userid'];
+
+// Define the Java service endpoint URL
+$endpointUrl = "http://localhost:8080/CinemaService/reservations/user/$userid";
+
+// Send the HTTP GET request
+$reservationsJson = file_get_contents($endpointUrl);
+
+$reservations = [];
+if ($reservationsJson) {
+    $reservations = json_decode($reservationsJson, true);
+}
+
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CinemaApp</title>
+    <title>My Reservations</title>
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
@@ -38,20 +59,23 @@ session_start();
         </nav>
     </header>
     <div class="container">
-        <?php
-            if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-                if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
-                    echo '<h2>Welcome, Admin!</h2>';
-                    echo '<h2>From here you have access to modify movies and change the status of reservations</h2>';
-                } else {
-                    echo '<h2>Welcome, User!</h2>';
-                    echo '<p>Enjoy using CinemaApp to make movie reservations.</p>';
-                }
-            } else {
-                echo '<h2>Welcome to CinemaApp</h2>';
-                echo '<h2>Your ultimate movie reservation platform.</h2>';
-            }
-        ?>
+        <h1>My Reservations</h1>
+        <table>
+            <tr>
+                <th>Reservation ID</th>
+                <th>Product ID</th>
+                <th>Reservation Date</th>
+                <th>Status</th>
+            </tr>
+            <?php foreach ($reservations as $reservation) { ?>
+                <tr>
+                    <td><?php echo $reservation['reservationid']; ?></td>
+                    <td><?php echo $reservation['productid']; ?></td>
+                    <td><?php echo $reservation['reservationdate']; ?></td>
+                    <td><?php echo $reservation['status']; ?></td>
+                </tr>
+            <?php } ?>
+        </table>
     </div>
     <footer>
         <p>&copy; CinemaApp 2023. All rights reserved.</p>

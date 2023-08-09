@@ -9,6 +9,12 @@ body {
     background-color: #D8D9DA; /* Light Gray */
 }
 
+a {
+    color: #fff;
+    text-decoration: none; 
+}
+
+
 .container {
     max-width: 1200px;
     margin: 0 auto;

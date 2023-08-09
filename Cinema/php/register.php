@@ -8,6 +8,7 @@ $firstname_err = $lastname_err = $country_err = $city_err = $address_err = $emai
 $success_message = $error_message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve user input from the form
     $firstname = trim($_POST["firstname"]);
     $lastname = trim($_POST["lastname"]);
     $country = trim($_POST["country"]);
@@ -17,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST["username"]);
     $password = trim($_POST["password"]);
 
+    // Validate form inputs
     if (empty($firstname)) {
         $firstname_err = "Please enter your first name.";
     }
@@ -43,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email_err = "Invalid email format.";
     }
 
+    // Check if the username is already taken
     if (empty($username)) {
         $username_err = "Please choose a username.";
     } else {
@@ -70,6 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password_err = "Password must have at least 8 characters.";
     }
 
+    // If there are no validation errors, insert registration request into the database
     if (empty($firstname_err) && empty($lastname_err) && empty($country_err) && empty($city_err) && empty($address_err) && empty($email_err) && empty($username_err) && empty($password_err)) {
         $sql = "INSERT INTO registration_requests (firstname, lastname, country, city, address, email, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         if ($stmt = mysqli_prepare($link, $sql)) {
@@ -106,14 +110,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body class="bg-primary">
     <header>
-        <h1>CinemaApp</h1>
+        <h1>
+            <a name="logo" href="index.php">CinemaApp</a>
+        </h1>
+        <!-- Navigation links based on user role and login status -->
         <nav>
-        <a href="index.php">Home</a>
-        <a href="view_movies.php">list Movies</a>
+            <a href="index.php">Home</a>
+            <a href="view_movies.php">list Movies</a>
             <?php
                 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                     if (isset($_SESSION['role']) && $_SESSION['role'] === 'user') {
-                        echo '<a href="my_info.php">My Info</a>';
+                        echo '<a href="create_reservation.php">Create Reservation</a>';
+                        echo '<a href="user_view_reservations.php">My Reservations</a>';
                     } elseif (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
                         echo '<a href="view_reservations.php">View Reservations</a>';
                         echo '<a href="create_product.php">Add Movies</a>';

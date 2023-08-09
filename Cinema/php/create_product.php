@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_bind_param($stmt, "ssds", $name, $description, $price, $type);
 
         if (mysqli_stmt_execute($stmt)) {
-            header('Location: products.php'); // Redirect to products page after successful addition
+            header('Location: index.php'); // Redirect to index page after successful addition
             exit();
         } else {
             $error_message = 'Failed to add movie. Please try again.';
@@ -53,13 +53,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <header>
-        <h1>CinemaApp</h1>
+        <h1>
+            <a name="logo" href="index.php">CinemaApp</a>
+        </h1>
+        <!-- Navigation links based on user role and login status -->
         <nav>
             <a href="index.php">Home</a>
+            <a href="view_movies.php">list Movies</a>
             <?php
                 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                     if (isset($_SESSION['role']) && $_SESSION['role'] === 'user') {
-                        echo '<a href="my_info.php">My Info</a>';
+                        echo '<a href="create_reservation.php">Create Reservation</a>';
+                        echo '<a href="user_view_reservations.php">My Reservations</a>';
                     } elseif (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
                         echo '<a href="view_reservations.php">View Reservations</a>';
                         echo '<a href="create_product.php">Add Movies</a>';
@@ -74,7 +79,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     echo '<a href="register.php">Register</a>';
                 }
             ?>
-
         </nav>
     </header>
     <div class="container">

@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Validate user input (similar to registration validation)
+    // Validate user input 
     if (empty($username) || empty($password)) {
         $error_message = 'Please fill in all fields.';
     } else {
@@ -30,13 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['userid'] = $user['userid']; // Store user ID in session
                     $_SESSION['role'] = $user['role']; // Store user role in session
 
-                    // Check if the user is the admin
-                    if ($user['role'] === 'admin') {
-                        $_SESSION['admin'] = true;
-                        header('Location: index.php'); // Redirect admin to admin area
-                    } else {
-                        header('Location: index.php'); // Redirect non-admin to regular area
-                    }
+                    header('Location: index.php'); 
+
                     exit();
                 } else {
                     $error_message = 'Invalid username or password. Please try again.';
@@ -61,16 +56,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="script.js"></script>
 </head>
 <body>
-    <!-- Include the header -->
     <header>
-        <h1>CinemaApp</h1>
+        <h1>
+            <a name="logo" href="index.php">CinemaApp</a>
+        </h1>
+        <!-- Navigation links based on user role and login status -->
         <nav>
-        <a href="index.php">Home</a>
-        <a href="view_movies.php">list Movies</a>
+            <a href="index.php">Home</a>
+            <a href="view_movies.php">list Movies</a>
             <?php
                 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                     if (isset($_SESSION['role']) && $_SESSION['role'] === 'user') {
-                        echo '<a href="my_info.php">My Info</a>';
+                        echo '<a href="create_reservation.php">Create Reservation</a>';
+                        echo '<a href="user_view_reservations.php">My Reservations</a>';
                     } elseif (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
                         echo '<a href="view_reservations.php">View Reservations</a>';
                         echo '<a href="create_product.php">Add Movies</a>';
@@ -102,7 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit">Login</button>
         </form>
     </div>
-    <!-- Include the footer -->
     <footer>
         <p>&copy; CinemaApp 2023. All rights reserved.</p>
     </footer>
