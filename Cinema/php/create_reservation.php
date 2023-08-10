@@ -57,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_reservation'])
 <head>
     <title>Create Reservation</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/script.js"></script>
 </head>
 <body>
     <header>

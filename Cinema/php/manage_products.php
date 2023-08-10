@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product'])) {
 <head>
     <title>View Movies</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/script.js"></script>
 </head>
 <body>
     <header>

@@ -27,6 +27,7 @@ if ($reservationsJson) {
 <head>
     <title>My Reservations</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/script.js"></script>
 </head>
 <body>
     <header>

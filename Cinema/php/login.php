@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <title>Login</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <script src="script.js"></script>
+    <script src="../js/script.js"></script>
 </head>
 <body>
     <header>

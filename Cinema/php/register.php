@@ -7,6 +7,12 @@ $firstname = $lastname = $country = $city = $address = $email = $username = $pas
 $firstname_err = $lastname_err = $country_err = $city_err = $address_err = $email_err = $username_err = $password_err = "";
 $success_message = $error_message = "";
 
+// Retrieve countries data from API
+$countries_url = 'https://countriesnow.space/api/v0.1/countries/positions';
+$countries_data = file_get_contents($countries_url);
+$countries_result = json_decode($countries_data, true);
+$countries = $countries_result['data'];
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve user input from the form
     $firstname = trim($_POST["firstname"]);
@@ -75,6 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // If there are no validation errors, insert registration request into the database
     if (empty($firstname_err) && empty($lastname_err) && empty($country_err) && empty($city_err) && empty($address_err) && empty($email_err) && empty($username_err) && empty($password_err)) {
+        
         $sql = "INSERT INTO registration_requests (firstname, lastname, country, city, address, email, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         if ($stmt = mysqli_prepare($link, $sql)) {
             mysqli_stmt_bind_param($stmt, "ssssssss", $param_firstname, $param_lastname, $param_country, $param_city, $param_address, $param_email, $param_username, $param_password);
@@ -103,10 +110,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - CinemaApp</title>
+    <title>Register</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/script.js"></script>
 </head>
 <body class="bg-primary">
     <header>
@@ -153,12 +159,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <br>
 
                 <label for="country">Country:</label>
-                <input type="text" id="country" name="country" value="<?php echo $country; ?>">
+                <select id="country" name="country">
+                    <option value="">Select Country</option>
+                    <?php
+                    foreach ($countries as $countryData) {
+                        echo '<option value="' . $countryData['name'] . '">' . $countryData['name'] . '</option>';
+                    }
+                    ?>
+                </select>
                 <span class="error"><?php echo $country_err; ?></span>
                 <br>
 
-                <label for="city">City:</label>
+                <!-- <label for="city">City:</label>
                 <input type="text" id="city" name="city" value="<?php echo $city; ?>">
+                <span class="error"><?php echo $city_err; ?></span>
+                <br> -->
+
+                <label for="city">City:</label>
+                <select id="city" name="city">
+                    <option value="">Select City</option>
+                </select>
                 <span class="error"><?php echo $city_err; ?></span>
                 <br>
 

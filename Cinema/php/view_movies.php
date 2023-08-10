@@ -15,6 +15,7 @@ $movies = json_decode($response, true);
 <head>
     <title>Manage Movies</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/script.js"></script>
 </head>
 <body>
     <header>

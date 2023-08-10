@@ -6,6 +6,7 @@ session_start();
 <head>
     <title>CinemaApp</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/script.js"></script>
 </head>
 <body>
     <header>

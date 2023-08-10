@@ -104,6 +104,7 @@ if ($result) {
 <head>
     <title>Admin Approval</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/script.js"></script>
 </head>
 <body>
     <header>

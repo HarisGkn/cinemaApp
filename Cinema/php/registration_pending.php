@@ -4,14 +4,16 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CinemaApp</title>
+    <title>Registration Pending</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/script.js"></script>
 </head>
 <body>
     <header>
         <h1>
             <a name="logo" href="index.php">CinemaApp</a>
         </h1>
+        <!-- Navigation links based on user role and login status -->
         <nav>
             <a href="index.php">Home</a>
             <a href="view_movies.php">list Movies</a>
