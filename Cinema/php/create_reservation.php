@@ -8,6 +8,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 }
 
 // Fetch movies from the database
+// fetch τις ταινίες απο τη βάση
 $selectMoviesQuery = "SELECT productid, name FROM products";
 $result = mysqli_query($link, $selectMoviesQuery);
 
@@ -24,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_reservation'])
     $status = 'Pending'; // Default status
 
     // Retrieve userid from session
+    // Παίρνουμε το userid απο το session 
     $userid = $_SESSION['userid'];
 
     $postData = http_build_query(array(
@@ -34,9 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_reservation'])
     ));
 
     // Define the Java service endpoint URL
+    // Με αυτό το request θα αλληλεπιδρούμε με τη βάση
     $endpointUrl = 'http://localhost:8080/CinemaService/reservations/create';
 
     // Create a context for the HTTP POST request
+    // ουσιαστικά ξεκαθαρίζουμε ότι το request θα είναι post κλπ
     $context = stream_context_create(array(
         'http' => array(
             'method' => 'POST',

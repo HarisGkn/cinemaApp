@@ -170,11 +170,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span class="error"><?php echo $country_err; ?></span>
                 <br>
 
-                <!-- <label for="city">City:</label>
-                <input type="text" id="city" name="city" value="<?php echo $city; ?>">
-                <span class="error"><?php echo $city_err; ?></span>
-                <br> -->
-
                 <label for="city">City:</label>
                 <select id="city" name="city">
                     <option value="">Select City</option>

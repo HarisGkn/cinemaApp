@@ -3,14 +3,16 @@ session_start();
 require_once "config.php";
 
 // Check if user is not logged in, then redirect to login page
+// Αν ο χρήστης δεν έχει συνδεθεί τον πάμε στην σελίδα login
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location: login.html');
     exit();
 }
 
 // Check if user has admin role, then allow access
+// Να επιτρέπεται η πρόσβαση μόνο αν ο χρήστης είναι admin
 if ($_SESSION['role'] !== 'admin') {
-    header('Location: index.php'); // Redirect to a different page for non-admin users
+    header('Location: index.php'); 
     exit();
 }
 
@@ -31,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_bind_param($stmt, "ssds", $name, $description, $price, $type);
 
         if (mysqli_stmt_execute($stmt)) {
-            header('Location: index.php'); // Redirect to index page after successful addition
+            header('Location: index.php'); // Redirect to index page after successful addition | // Ανακατεύθυνση στην αρχική μετά από επιτυχημένο addition
             exit();
         } else {
             $error_message = 'Failed to add movie. Please try again.';
@@ -57,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a name="logo" href="index.php">CinemaApp</a>
         </h1>
         <!-- Navigation links based on user role and login status -->
+        <!-- navigation links βάσει του ρόλου του χρήστη και του login status -->
         <nav>
             <a href="index.php">Home</a>
             <a href="view_movies.php">list Movies</a>

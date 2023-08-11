@@ -10,7 +10,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 // Check if user has admin role, then allow access
 if ($_SESSION['role'] !== 'admin') {
-    header('Location: index.php'); // Redirect to a different page for non-admin users
+    header('Location: index.php');
     exit();
 }
 

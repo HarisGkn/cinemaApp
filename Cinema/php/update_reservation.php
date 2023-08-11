@@ -2,7 +2,7 @@
 session_start();
 require_once "config.php";
 
-// Check if user is not logged in, then redirect to login page
+// Check if user is not logged in, if not redirect to login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location: login.html');
     exit();
@@ -10,7 +10,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 // Check if user has admin role, then allow access
 if ($_SESSION['role'] !== 'admin') {
-    header('Location: index.php'); // Redirect to a different page for non-admin users
+    header('Location: index.php');
     exit();
 }
 

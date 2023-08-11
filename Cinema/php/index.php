@@ -46,7 +46,7 @@ session_start();
                     echo '<h2>From here you have access to modify movies and change the status of reservations</h2>';
                 } else {
                     echo '<h2>Welcome, User!</h2>';
-                    echo '<p>Enjoy using CinemaApp to make movie reservations.</p>';
+                    echo '<h2>Enjoy using CinemaApp!</h2>';
                 }
             } else {
                 echo '<h2>Welcome to CinemaApp</h2>';

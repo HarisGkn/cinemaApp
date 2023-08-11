@@ -6,10 +6,11 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location: login.php');
     exit();
 }
+date_default_timezone_set('Europe/Athens'); //fix issue of date being shown wrong in the front-end due to timezone issues
 
 $userid = $_SESSION['userid'];
 
-// Define the Java service endpoint URL
+// Java service endpoint URL
 $endpointUrl = "http://localhost:8080/CinemaService/reservations/user/$userid";
 
 // Send the HTTP GET request
@@ -72,7 +73,7 @@ if ($reservationsJson) {
                 <tr>
                     <td><?php echo $reservation['reservationid']; ?></td>
                     <td><?php echo $reservation['productid']; ?></td>
-                    <td><?php echo $reservation['reservationdate']; ?></td>
+                    <td><?php echo date('Y-m-d', $reservation['reservationdate'] / 1000); ?></td>
                     <td><?php echo $reservation['status']; ?></td>
                 </tr>
             <?php } ?>
